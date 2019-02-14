@@ -1,0 +1,19 @@
+package main
+
+import "fmt"
+
+func producer(channel chan int)  {
+	for i := 0; i < 10; i++{
+		channel <- i
+	}
+	close(channel)
+}
+
+func main()  {
+	ch := make(chan int)
+	go producer(ch)
+
+	for v := range ch{
+		fmt.Println("received: ", v)
+	}
+}
